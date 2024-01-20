@@ -22,16 +22,35 @@ country_list = [
     list(map(int, sys.stdin.readline().split())) for _ in range(num_of_country)
 ]
 
-country_list.sort(key=lambda x: (x[1], x[2], x[3]))
+country_list.sort(key=lambda x: (x[1], x[2], x[3]), reverse=True)
 
+passed = 1
+grade = 1
+prev_country = None
 for i in range(num_of_country):
-    if ans_country == country_list[i][0]:
-        print(i + 1)
+    cur_country = country_list[i]
+
+    if prev_country == None:
+        prev_country = country_list[i]
+
+        if cur_country[0] == ans_country:
+            break
+        continue
+
+    if (
+        cur_country[1] == prev_country[1]
+        and cur_country[2] == prev_country[2]
+        and cur_country[3] == prev_country[3]
+    ):
+        passed += 1
+    else:
+        grade += passed
+        passed = 1
+
+    if cur_country[0] == ans_country:
         break
 
-country_level_list = []
-country_level_list.append(country_list[0])
-temp = country_list[0]
-level = 1
-for i in range(1, num_of_country):
-    cur_country = country_list[i]
+    prev_country = cur_country
+
+
+print(grade)
