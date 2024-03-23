@@ -114,20 +114,16 @@ def right(map):
             j -= 1
 
 
-map = [
-    [0, 4, 4, 32],
-    [4, 0, 2, 64],
-    [8, 8, 0, 0],
-    [0, 16, 64, 4],
-]
+import sys
 
-right(map)
-print(map)
-up(map)
-print(map)
-down(map)
-print(map)
-left(map)
-print(map)
-down(map)
-print(map)
+r, c, m = map(int, sys.stdin.readline().split())
+
+sharks = [list(map(int, sys.stdin.readline().split())) for _ in range(m)]
+
+angler_location = -1
+
+for shark in sharks:
+    if shark[0] == 4:
+        sharks.remove(shark)
+
+print(sharks)
