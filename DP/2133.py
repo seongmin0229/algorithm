@@ -15,3 +15,5 @@ if n > 2:
                 DP[i] += DP[i - j] * 2
 
 print(DP[n])
+
+# https://yabmoons.tistory.com/536
