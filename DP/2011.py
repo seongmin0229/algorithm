@@ -22,7 +22,7 @@ if len(n) > 1:
             DP[0][1] = 0
     else:
         DP[0][1] = DP[0][0] + DP[1][0]
-        if (n[1] <= 6 and n[0] == 2) or (n[1] <= 8 and n[0] == 1):
+        if (n[1] <= 6 and n[0] == 2) or (n[1] <= 9 and n[0] == 1):
             DP[1][1] = 1
 
 if len(n) > 2:
@@ -36,7 +36,7 @@ if len(n) > 2:
                 DP[1][i] = 0
         else:
             DP[0][i] = DP[0][i - 1] + DP[1][i - 1]
-            if (n[i] <= 6 and n[i - 1] == 2) or (n[i] <= 8 and n[i - 1] == 1):
+            if (n[i] <= 6 and n[i - 1] == 2) or (n[i] <= 9 and n[i - 1] == 1):
                 DP[1][i] = DP[0][i - 2] + DP[1][i - 2]
             else:
                 DP[1][i] = 0
