@@ -20,4 +20,4 @@ if k > 2:
             for l in range(j + 1):
                 DP[j][i] += DP[l][i - 1]
 
-print(DP[n][k])
+print(DP[n][k] % 1000000000)
