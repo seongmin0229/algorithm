@@ -1,70 +1,53 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        String[] split = br.readLine().split(" ");
-        int n = Integer.parseInt(split[0]);
-        int k = Integer.parseInt(split[1]);
+        int n = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
 
-        bw.append(Integer.toString(bfs(n, k)));
+        /**
+         * 0 - 1 BFS 문제, 보통 Deque를 사용함
+         */
 
-        bw.flush();
-        bw.close();
-        br.close();
-    }
+        int[] dist = new int[100001];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[n] = 0;
 
-    private static int bfs(int n, int k) {
-        int[] visit = new int[100001];
-        Arrays.fill(visit, -1);
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
 
-        Deque<Pair> queue = new ArrayDeque<>();
-        queue.addFirst(new Pair(n, 0));
-        visit[n] = 0;
+        deque.add(n);
 
-        while(!queue.isEmpty()){
-            Pair i = queue.pollFirst();
-            int pos = i.pos;
-            int h = i.h;
+        while(!deque.isEmpty()){
+            int cur = deque.pollFirst();
 
-            if(pos == k) return h;
+            if(cur == k) break;
 
-            if(pos < 50001 && visit[pos * 2] == -1) {
-                visit[pos * 2] = h;
-                queue.addFirst(new Pair(pos * 2, h));
+            int nx = cur * 2;
+            if(nx < 100001 && dist[nx] > dist[cur]){
+                dist[nx] = dist[cur];
+                deque.addFirst(nx);
             }
 
-            if(pos > 0 && visit[pos - 1] == -1){
-                visit[pos - 1] = h + 1;
-                queue.add(new Pair(pos - 1, h + 1));
+            nx = cur - 1;
+            if(nx >= 0 && dist[nx] > dist[cur] + 1){
+                dist[nx] = dist[cur] + 1;
+                deque.addLast(nx);
             }
 
-            if(pos < 100000 && visit[pos + 1] == -1){
-                visit[pos + 1] = h + 1;
-                queue.add(new Pair(pos + 1, h + 1));
+            nx = cur + 1;
+            if(nx < 100001 && dist[nx] > dist[cur] + 1){
+                dist[nx] = dist[cur] + 1;
+                deque.addLast(nx);
             }
         }
-        return -1;
+
+        System.out.println(dist[k]);
     }
-
-    static class Pair implements Comparable<Pair>{
-        int pos;
-        int h;
-
-        public Pair(int pos, int h) {
-            this.pos = pos;
-            this.h = h;
-        }
-
-        @Override
-        public int compareTo(Pair o) {
-            return Integer.compare(this.h, o.h);
-        }
-    }
-
 }
