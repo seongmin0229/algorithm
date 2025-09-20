@@ -38,7 +38,9 @@ public class Main {
         // 플로이드 와샬 시작
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
+                if(graph[j][i] == INF) continue;
                 for(int k = 0; k < n; k++){
+                    if(graph[i][k] == INF) continue;
                     int cost = graph[j][i] + graph[i][k];
                     if(graph[j][k] > cost){
                         graph[j][k] = cost;
