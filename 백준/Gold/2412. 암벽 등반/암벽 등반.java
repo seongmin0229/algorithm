@@ -10,7 +10,7 @@ public class Main {
         int n = Integer.parseInt(st.nextToken());
         int t = Integer.parseInt(st.nextToken());
 
-        HashMap<Integer, List<Integer>> map = new HashMap<>();
+        HashMap<Integer, Set<Integer>> map = new HashMap<>();
 
         for(int i = 0; i < n; i++){
             st = new StringTokenizer(br.readLine());
@@ -18,13 +18,12 @@ public class Main {
             if(map.containsKey(a)){
                 map.get(a).add(b);
             }else{
-                List<Integer> l = new ArrayList<>();
+                Set<Integer> l = new HashSet<>();
                 l.add(b);
                 map.put(a, l);
             }
         }
 
-        map.values().forEach(list -> list.sort(null));
 
         Deque<int[]> q = new ArrayDeque<>();
         q.add(new int[]{0, 0, 0});
@@ -38,7 +37,7 @@ public class Main {
             }
             for(int i = -2; i <= 2; i++){
                 int nx = x + i;
-                List<Integer> yList = map.get(nx);
+                Set<Integer> yList = map.get(nx);
 
                 if(yList == null) continue;
 
@@ -46,7 +45,7 @@ public class Main {
                     int ny = y + j;
                     if(!yList.contains(ny)) continue;
                     q.add(new int[]{nx, ny, d + 1});
-                    yList.remove((Integer)ny);
+                    yList.remove(ny);
                 }
 
             }
